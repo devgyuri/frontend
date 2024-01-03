@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
@@ -17,7 +16,7 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
   const [createBoard] = useMutation(CREATE_BOARD);
   const [updateBoard] = useMutation(UPDATE_BOARD);
 
-  const onClickSubmit = async () => {
+  const onClickSubmit = async (): Promise<void> => {
     const result = await createBoard({
       variables: {
         writer,
@@ -26,12 +25,12 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
       },
     });
     console.log(result);
-    router.push(
+    void router.push(
       `/section09/10-02-typescript-boards/${result.data.createBoard.number}`,
     );
   };
 
-  const onClickUpdate = async () => {
+  const onClickUpdate = async (): Promise<void> => {
     const myVariables: IMyVariables = {
       number: Number(router.query.number),
     };
@@ -49,7 +48,7 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
       variables: myVariables,
     });
     console.log(result);
-    router.push(
+    void router.push(
       `/section10/10-02-typescript-boards/${result.data.updateBoard.number}`,
     );
   };

@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 
@@ -28,7 +26,7 @@ export default function StaticRoutingMovedPage(): JSX.Element {
     if (typeof router.query.number !== "string") {
       return;
     }
-    router.push(
+    void router.push(
       `/section10/10-02-typescript-boards/${router.query.number}/edit`,
     );
   };
