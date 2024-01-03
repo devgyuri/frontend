@@ -1,9 +1,10 @@
+/* eslint-disable */
 export interface IProfile {
-    name: string
-    age: number
-    school: string
-    hobby?: string
-};
+  name: string;
+  age: number;
+  school: string;
+  hobby?: string;
+}
 
 type aaa = Partial<IProfile>;
 
@@ -21,8 +22,8 @@ type fff = Record<eee, IProfile>;
 type ggg = keyof IProfile;
 
 export interface IProfile {
-    candy: number;
-};
+  candy: number;
+}
 let profile: Partial<IProfile> = {
-    candy: 10
+  candy: 10,
 };
