@@ -10,6 +10,7 @@ export default function PageChildrenPage(): JSX.Element {
         <div>
           <input type="text" />
           <div>I'm manggu</div>
+          <span>한글 테스트입니다 폰트 적용 가능?</span>
           <button>Click me!</button>
         </div>
       </Example>
