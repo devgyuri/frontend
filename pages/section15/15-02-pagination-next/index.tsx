@@ -3,7 +3,7 @@ import type {
   IQuery,
   IQueryFetchBoardsArgs,
 } from "../../../src/commons/types/generated/types";
-import type { MouseEvent } from "react";
+import { useState, type MouseEvent } from "react";
 
 const FETCH_BOARDS = gql`
   query fetchBoards($page: Int) {
@@ -17,6 +17,8 @@ const FETCH_BOARDS = gql`
 `;
 
 export default function StaticRoutingMovedPage(): JSX.Element {
+  const [startPage, setStartPage] = useState(1);
+
   const { data, refetch } = useQuery<
     Pick<IQuery, "fetchBoards">,
     IQueryFetchBoardsArgs
@@ -25,6 +27,16 @@ export default function StaticRoutingMovedPage(): JSX.Element {
 
   const onClickPage = (event: MouseEvent<HTMLSpanElement>): void => {
     void refetch({ page: Number(event.currentTarget.id) });
+  };
+
+  const onClickPrevPage = (event: MouseEvent<HTMLSpanElement>): void => {
+    setStartPage(startPage - 10);
+    void refetch({ page: startPage - 10 });
+  };
+
+  const onClickNextPage = (event: MouseEvent<HTMLSpanElement>): void => {
+    setStartPage(startPage + 10);
+    void refetch({ page: startPage + 10 });
   };
 
   return (
@@ -36,28 +48,18 @@ export default function StaticRoutingMovedPage(): JSX.Element {
           <span style={{ margin: "10px" }}>{el.writer}</span>
         </div>
       ))}
-      {/* <span id="1" onClick={onClickPage}>
-        1
-      </span>
-      <span id="2" onClick={onClickPage}>
-        2
-      </span>
-      <span id="3" onClick={onClickPage}>
-        3
-      </span> */}
-      {
-        // [1, 2, 3].map((_el, index) => {
-        //   <span key={index+1} id={String(index+1)} onClick={onClickPage}>
-        //     {index+1}
-        //   </span>
-        // })
 
-        new Array(10).fill("철수").map((_, index) => (
-          <span key={index + 1} id={String(index + 1)} onClick={onClickPage}>
-            {index + 1}
-          </span>
-        ))
-      }
+      <span onClick={onClickPrevPage}>prev&nbsp;&nbsp;&nbsp;</span>
+      {new Array(10).fill("철수").map((_, index) => (
+        <span
+          key={index + startPage}
+          id={String(index + startPage)}
+          onClick={onClickPage}
+        >
+          {index + startPage}&nbsp;&nbsp;&nbsp;
+        </span>
+      ))}
+      <span onClick={onClickNextPage}>next</span>
     </div>
   );
 }
