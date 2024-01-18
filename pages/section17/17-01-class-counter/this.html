@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <title>this</title>
+    <script>
+      class ClassCounterPage {
+        count = 10;
+
+        onClickCountUp = () => {
+          console.log("현재 카운트: ", this.count);
+        };
+
+        render() {
+          const button = document.createElement("button");
+          button.innerText = "count up";
+          button.addEventListener("click", this.onClickCountUp);
+          document.body.appendChild(button);
+        }
+      }
+
+      window.onload = () => {
+        const counter = new ClassCounterPage();
+        counter.render();
+      };
+    </script>
+  </head>
+  <body></body>
+</html>
