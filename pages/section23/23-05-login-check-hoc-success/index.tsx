@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import type { IQuery } from "../../../src/commons/types/generated/types";
-import { loginCheck } from "../../../src/components/commons/hocs/loginCheck";
+import { withAuth } from "../../../src/components/commons/hocs/withAuth";
 
 const FETCH_USER_LOGGED_IN = gql`
   query {
@@ -18,4 +18,4 @@ function MyPage(): JSX.Element {
   return <>Hello {data?.fetchUserLoggedIn.name}!</>;
 }
 
-export default loginCheck(MyPage);
+export default withAuth(MyPage);
