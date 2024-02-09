@@ -32,6 +32,7 @@ export default function StaticRoutingMovedPage(): JSX.Element {
       {typeof window !== "undefined" && (
         <div
           dangerouslySetInnerHTML={{
+            // eslint-disable-next-line
             __html: Dompurify.sanitize(data?.fetchBoard?.contents),
           }}
         />
