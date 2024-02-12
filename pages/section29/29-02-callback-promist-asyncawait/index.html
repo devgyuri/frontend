@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <title>Callback improved</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      function myAddEventListener(aaa, bbb) {
+        // settin된 API 주소로 요청
+        const res = 70;
+
+        if (aaa === "load") {
+          bbb(res);
+        }
+      }
+
+      const onClickCallback = () => {
+        const aaa = new XMLHttpRequest();
+        aaa.open("get", `http://numbersapi.com/random?min=1&max=200`);
+        aaa.send();
+        aaa.addEventListener("load", (res) => {
+          const num = res.target.response.split(" ")[0];
+
+          const bbb = new XMLHttpRequest();
+          bbb.open("get", `https://koreanjson.com/posts/${num}`);
+          bbb.send();
+          bbb.addEventListener("load", (res) => {
+            const userId = JSON.parse(res.target.response).UserId;
+
+            const ccc = new XMLHttpRequest();
+            ccc.open("get", `https://koreanjson.com/posts?userId=${userId}`);
+            ccc.send();
+            ccc.addEventListener("load", (res) => {
+              console.log(res);
+            });
+          });
+        });
+      };
+
+      // new Promise((successFunc, failFunc) => {
+      //   try {
+      //     const qqq = "hello"
+      //     successFunc(qqq);
+      //   } catch (err) {
+      //     failFunc()
+      //   }
+      // }).then((qqq) => {
+      //   console.log(qqq);
+      // }).catch((rrr) => {
+      //   console.log(rrr);
+      // })
+
+      const myAxios = {
+        get: () => {
+          return new Promise((resolve, reject) => {});
+        },
+        post: () => {
+          return new Promise((resolve, reject) => {});
+        },
+      };
+
+      const onClickPromise = () => {
+        // axios.get(`http://numbersapi.com/random?min=1&max=200`).then((res) => {
+        //   const num = res.target.response.split(" ")[0];
+        //   axios.get(`https://koreanjson.com/posts/${num}`.then((res) => {
+        //     const userId = JSON.parse(res.target.response).UserId;
+        //     axios.get(`https://koreanjson.com/posts?userId=${userId}`).then((res) => {
+        //       console.log(res);
+        //     })
+        //   }))
+        // })
+
+        axios
+          .get(`http://numbersapi.com/random?min=1&max=200`)
+          .then((res) => {
+            const num = res.data.split(" ")[0];
+            return axios.get(`https://koreanjson.com/posts/${num}`);
+          })
+          .then((res) => {
+            const userId = res.data.UserId;
+            return axios.get(`https://koreanjson.com/posts?userId=${userId}`);
+          })
+          .then((res) => {
+            console.log(res.data);
+          });
+      };
+
+      const onclickAsyncAwait = async () => {
+        const res1 = await axios.get(
+          `http://numbersapi.com/random?min=1&max=200`,
+        );
+        const num = res1.data.split(" ")[0];
+        const res2 = await axios.get(`https://koreanjson.com/posts/${num}`);
+        const userId = res2.data.UserId;
+        const res3 = await axios.get(
+          `https://koreanjson.com/posts?userId=${userId}`,
+        );
+        console.log(res3.data);
+      };
+    </script>
+  </head>
+  <body>
+    <button style="width: 100px; height: 100px" onClick="onClickCallback()">
+      click callback
+    </button>
+    <button style="width: 100px; height: 100px" onClick="onClickPromise()">
+      click promise
+    </button>
+    <button style="width: 100px; height: 100px" onClick="onclickAsyncAwait()">
+      click async await
+    </button>
+  </body>
+</html>

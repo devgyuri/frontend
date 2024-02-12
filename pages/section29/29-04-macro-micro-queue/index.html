@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <title>Event Loop</title>
+    <script>
+      const onClickLoop = () => {
+        console.log("start!!");
+
+        setTimeout(() => {
+          new Promise((resolve) => {
+            resolve("kitty =^..^=");
+          }).then((res) => {
+            console.log("I'm promise in setTimeout!");
+          });
+          console.log(
+            "I'm setTimeOut! macro queue! after 0 second, I will be start",
+          );
+        }, 0);
+
+        new Promise((resolve) => {
+          resolve("kitty =^..^=");
+        }).then((res) => {
+          console.log(
+            "I'm 1st promise! micro queue! after 0 second, I will be start",
+          );
+        });
+
+        setInterval(() => {
+          console.log(
+            "I'm setInterval! macro queue! every 0 second, I will be start",
+          );
+        }, 0);
+
+        let sum = 0;
+        for (let i = 0; i <= 900000000; i++) {
+          sum++;
+        }
+
+        new Promise((resolve) => {
+          resolve("kitty =^..^=");
+        }).then((res) => {
+          console.log(
+            "I'm 2nd promise! micro queue! after 0 second, I will be start",
+          );
+        });
+
+        console.log("end!!");
+      };
+    </script>
+  </head>
+  <body>
+    <button onclick="onClickLoop()">start</button>
+  </body>
+</html>
