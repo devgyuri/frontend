@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <title>Promise.all</title>
+    <script>
+      const startPromise = async () => {
+        console.time("===independent promises===");
+        const result1 = await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("success1");
+          }, 2000);
+        });
+
+        const result2 = await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("success2");
+          }, 3000);
+        });
+
+        const result3 = await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("success3");
+          }, 1000);
+        });
+        const results = [result1, result2, result3];
+        console.log(results);
+        console.timeEnd("===independent promises===");
+      };
+
+      const startPromiseAll = async () => {
+        console.time("===promise all===");
+        const results = await Promise.all([
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve("success1");
+            }, 2000);
+          }),
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve("success2");
+            }, 3000);
+          }),
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve("success3");
+            }, 1000);
+          }),
+        ]);
+        console.log(results);
+        console.timeEnd("===promise all===");
+      };
+    </script>
+  </head>
+  <body>
+    <button onclick="startPromise()">promise</button><br />
+    <button onclick="startPromiseAll()">promise.all</button>
+  </body>
+</html>
