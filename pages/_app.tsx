@@ -6,7 +6,7 @@ import ApolloSetting from "../src/components/commons/apollo";
 import { globalStyles } from "../src/commons/styles/globalStyles";
 import { RecoilRoot } from "recoil";
 
-export default function App({ Component }: AppProps): JSX.Element {
+export default function App({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <div>
       <RecoilRoot>
@@ -14,7 +14,7 @@ export default function App({ Component }: AppProps): JSX.Element {
           <>
             <Global styles={globalStyles} />
             <Layout>
-              <Component />
+              <Component {...pageProps} />
             </Layout>
           </>
         </ApolloSetting>
